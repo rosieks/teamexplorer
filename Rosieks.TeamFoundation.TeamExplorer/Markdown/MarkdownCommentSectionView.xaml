@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="Rosieks.TeamFoundation.TeamExplorer.Markdown.MarkdownCommentSectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Markdown.Xaml;assembly="
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <UserControl.Resources>
+
+        <Style TargetType="FlowDocument" x:Key="DocumentStyle">
+            <Setter Property="FontFamily"
+                    Value="Segoe UI" />
+            <Setter Property="TextAlignment"
+                    Value="Left" />
+            <Setter Property="FontSize"
+                    Value="12" />
+        </Style>
+
+        <Style x:Key="PageHeader"
+               TargetType="Paragraph">
+            <Setter Property="FontSize"
+                    Value="20" />
+            <Setter Property="Foreground"
+                    Value="#ff000000" />
+            <Setter Property="FontWeight"
+                    Value="Light" />
+        </Style>
+
+        <Style x:Key="SubHeader"
+               TargetType="Paragraph">
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="Foreground"
+                    Value="#ff000000" />
+            <Setter Property="FontWeight"
+                    Value="Light" />
+        </Style>
+
+        <Style x:Key="SubHeaderSecondary"
+               TargetType="Paragraph">
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="Foreground"
+                    Value="#99000000" />
+            <Setter Property="FontWeight"
+                    Value="Light" />
+        </Style>
+        
+        <Style x:Key="Code" TargetType="Run">
+            <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="Background" Value="#10ffffff" />
+        </Style>
+
+        <local:Markdown x:Key="Markdown"
+                        CodeStyle="{StaticResource Code}"
+                        DocumentStyle="{StaticResource DocumentStyle}"
+                        Heading1Style="{StaticResource PageHeader}"
+                        Heading2Style="{StaticResource SubHeader}"
+                        Heading3Style="{StaticResource SubHeaderSecondary}"/>
+
+        <local:TextToFlowDocumentConverter x:Key="TextToFlowDocumentConverter" 
+                                           Markdown="{StaticResource Markdown}"/>
+
+    </UserControl.Resources>
+    <Grid>
+        <!--<Label Name="commentTextBox" Content="{Binding Path=ParentSection.Comment}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red"/>-->
+        <FlowDocumentScrollViewer Grid.Row="0"
+                                  Grid.Column="1"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Stretch"
+                                  Margin="5"
+                                  VerticalScrollBarVisibility="Hidden"
+                                  HorizontalScrollBarVisibility="Hidden"
+                                  Document="{Binding Path=ParentSection.Comment, Converter={StaticResource TextToFlowDocumentConverter}}" />
+    </Grid>
+</UserControl>
